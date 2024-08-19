@@ -1,46 +1,65 @@
 "use client";
-
-import { Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import useMounted from "@/hooks/use-mounted";
+import { capitalizeFirstLetter } from "@/lib/utils";
+import { SunMoon } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
-export function ThemeToggle() {
-  const { setTheme, resolvedTheme } = useTheme();
+export default function ModeToggle() {
+  const { theme, setTheme } = useTheme();
 
-  const mounted = useMounted();
-  if (!mounted) return null;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          {resolvedTheme === "dark" ? (
-            <Sun className="h-5 w-5 text-orange-300" />
-          ) : (
-            <Moon className="h-5 w-5" />
-          )}
-
-          <span className="sr-only">Toggle theme</span>
+        <Button
+          variant="ghost"
+          className="w-full text-muted-foreground justify-start focus-visible:ring-0 focus-visible:ring-offset-0"
+        >
+          <SunMoon className="w-6 mr-2" />
+          <span className="hidden md:block">
+            {capitalizeFirstLetter(theme!)} Theme
+          </span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+      <DropdownMenuContent className="w-56">
+        <DropdownMenuLabel>Appearance</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuCheckboxItem
+          checked={theme === "system"}
+          onClick={() => setTheme("system")}
+        >
           System
-        </DropdownMenuItem>
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          checked={theme === "light"}
+          onClick={() => setTheme("light")}
+        >
+          Light
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          checked={theme === "dark"}
+          onClick={() => setTheme("dark")}
+        >
+          Dark
+        </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

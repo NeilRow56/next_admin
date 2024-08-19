@@ -3,22 +3,22 @@ import AppLogo from "../app-logo";
 
 import { Button } from "@/components/ui/button";
 import { PowerIcon } from "lucide-react";
-import { ThemeToggle } from "./ThemeToggle";
+import ModeToggle from "./ThemeToggle";
 import NavLinks from "./nav-links";
 
 export default function SideNav() {
   return (
-    <div className="flex flex-col h-full p-3">
+    <div className="flex flex-col h-full p-3 mt-2">
       <div>
         <AppLogo />
       </div>
 
-      <div className="flex flex-row grow  space-x-2 md:flex-col md:space-x-0 md:space-y-2 md:mt-2">
+      <div className="flex flex-row grow  space-x-2 md:flex-col md:space-x-0 md:space-y-2 md:mt-8">
         <NavLinks />
-        <div className="h-auto w-full grow rounded-md md:block"></div>
+        <div className="h-auto items-center w-full grow rounded-md md:block"></div>
 
         <div className="flex md:flex-col ">
-          <ThemeToggle />
+          <ModeToggle />
           <form
             action={async () => {
               "use server";

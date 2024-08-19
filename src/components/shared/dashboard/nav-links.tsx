@@ -30,9 +30,9 @@ export default function NavLinks() {
             className={cn(
               buttonVariants({ variant: "ghost" }),
               "justify-start",
-              link.href === pathname
-                ? "text-foreground font-bold text-lg   py-2 mt-8"
-                : "text-muted-foreground hover:text-foreground text-lg py-8"
+              pathname === link.href
+                ? "font-bold text-blue-700"
+                : "text-muted-foreground"
             )}
           >
             <LinkIcon className="mr-2 h-6 w-6" />
